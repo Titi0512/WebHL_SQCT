@@ -12,7 +12,12 @@ SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-this")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 480  # 8 hours
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto",
+    bcrypt__truncate_error=False,  # Tự động cắt mật khẩu thay vì báo lỗi
+    bcrypt__rounds=12  # Số vòng hash, có thể điều chỉnh
+)
 class Token(BaseModel):
     access_token: str
     token_type: str
